@@ -1,0 +1,22 @@
+language: go
+
+go:
+  - "1.8"
+  - "1.9"
+
+services:
+  - docker
+
+before_install:
+  - go get golang.org/x/tools/cmd/cover
+  - go get github.com/mattn/goveralls
+
+install:
+  - env GOARCH=amd64 GOOS=linux go build
+  - docker build -t nautilus .
+  - docker run -d -p 127.0.0.1:8080:8080 --name nautilus nautilus
+
+script:
+  #- go test -v -covermode=count ./...
+  #- goveralls -service=travis-ci
+  - docker ps | grep -q nautilus

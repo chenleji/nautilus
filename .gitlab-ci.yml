@@ -1,0 +1,79 @@
+image: ljchen/golang-sonar:latest
+
+#services:
+#  - mariadb
+
+#variables:
+#  MYSQL_DATABASE: nautilus
+#  MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+stages:
+  - sonar
+  - build
+  - test
+  - package
+  - deploy
+
+before_script:
+  - mkdir -p /go/src/github.com/chenleji
+  - cp -r $CI_PROJECT_DIR /go/src/github.com/chenleji/
+  - cd /go/src/github.com/chenleji/nautilus
+
+code_analysis:
+  stage: sonar
+  script:
+    - make sonar
+  tags:
+    - app-center
+
+#unit_tests:
+#  stage: test
+#  script:
+#    - make test
+#  tags:
+#    - app-center
+
+#race_detector:
+#  stage: test
+#  script:
+#    - make race
+#  tags:
+#    - app-center
+
+#code_coverage:
+#  stage: test
+#  script:
+#    - make coverage
+#  tags:
+#    - app-center
+
+#code_coverage_report:
+#  stage: test
+#  script:
+#    - make coverhtml
+#  tags:
+#    - app-center
+#  only:
+#  - master
+
+#build:
+#  stage: build
+#  script:
+#    - make default
+#  tags:
+#    - app-center
+
+package:
+  stage: package
+  script:
+    - make all
+  tags:
+    - app-center
+
+deploy:
+  stage: deploy
+  environment: test
+  script:
+    - make deploy
+  tags:
+    - app-center

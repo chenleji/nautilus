@@ -1,0 +1,12 @@
+FROM golang:1.10
+MAINTAINER chenleji@gmail.com
+
+COPY ./ /go/src/github.com/chenleji/nautilus/
+WORKDIR /go/src/github.com/chenleji/nautilus/
+RUN go build -o nautilus
+
+RUN cp -rf /go/src/github.com/chenleji/nautilus/nautilus / && \
+    rm -rf /go/src/github.com/chenleji/nautilus/ && \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+CMD /nautilus

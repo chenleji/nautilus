@@ -1,0 +1,13 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "nautilus Rest API",
+        "description": "nautilus Rest API",
+        "version": "1.0.0",
+        "termsOfService": "http://x.x.x.x:8010/",
+        "contact": {
+            "email": "admin@gmail.com"
+        }
+    },
+    "paths": null
+}
